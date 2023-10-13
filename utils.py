@@ -42,6 +42,9 @@ def get_word_list():
 
 def check_character(guess_character, answer):
     return {
-        "is_char_in_word": guess_character in answer,
-        "is_char_in_correct_position": guess_character == answer
+        "char": guess_character,
+        "scoring": {
+            "in_word": guess_character in answer,
+            "correct_idx": guess_character == answer
+        }
     }

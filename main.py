@@ -29,14 +29,20 @@ def read_root():
 def send_guess_word(word: str):
     guess_word = word.upper()
     if guess_word == word_of_the_day:
-        return {"game_won": True}
+        return {
+            "guess": guess_word,
+            "was_correct": True,
+            "was_word_in_list": True,
+        }
 
     # Check if the word in the word list
     word_list = get_word_list()
-    if not binary_search(word_list, 0, len(word_list) - 1, guess_word.lower()):
+    if guess_word.lower() in word_list:
         return {
-            "game_won": False,
-            "result": f"{guess_word} is not in the word list"}
+            "guess": guess_word,
+            "was_correct": False,
+            "was_word_in_list": False,
+        }
 
     # Check the word against the answer
     guess_result = []
@@ -44,8 +50,11 @@ def send_guess_word(word: str):
     for c in guess_word:
         guess_result.append(check_character(c, word_of_the_day))
     return {
-        "game_won": False,
-        "result": guess_result}
+        "guess": guess_word,
+        "was_correct": False,
+        "was_word_in_list": True,
+        "character_info": guess_result,
+    }
 
 
 """
