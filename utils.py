@@ -40,11 +40,11 @@ def get_word_list():
         return sorted(f.read().split("\n")[1:])
 
 
-def check_character(guess_character, answer):
+def check_character(guess_character, answer, idx):
     return {
         "char": guess_character,
         "scoring": {
             "in_word": guess_character in answer,
-            "correct_idx": guess_character == answer
+            "correct_idx": guess_character == answer[idx]
         }
     }

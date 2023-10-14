@@ -3,6 +3,8 @@ from utils import *
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+import uvicorn
+
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
@@ -31,32 +33,33 @@ def send_guess_word(word: str):
     if guess_word == word_of_the_day:
         return {
             "guess": guess_word,
-            "was_correct": True,
-            "was_word_in_list": True,
+            "is_correct": True,
+            "is_word_in_list": True,
         }
 
     # Check if the word in the word list
     word_list = get_word_list()
-    if guess_word.lower() in word_list:
+    if not guess_word.lower() in word_list:
         return {
             "guess": guess_word,
-            "was_correct": False,
-            "was_word_in_list": False,
+            "is_correct": False,
+            "is_word_in_list": False,
         }
 
     # Check the word against the answer
     guess_result = []
     # Calculate guess_word
-    for c in guess_word:
-        guess_result.append(check_character(c, word_of_the_day))
+    for idx, char in enumerate(guess_word):
+        guess_result.append(check_character(char, word_of_the_day, idx))
     return {
         "guess": guess_word,
-        "was_correct": False,
-        "was_word_in_list": True,
+        "is_correct": False,
+        "is_word_in_list": True,
         "character_info": guess_result,
     }
 
 
-"""
-uvicorn main:app --reload --port 5000
-"""
+if __name__ == '__main__':
+    # uvicorn main:app --reload --port 5000
+    uvicorn.run("main:app", port=5000, reload=True)
+
