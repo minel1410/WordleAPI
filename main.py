@@ -60,6 +60,6 @@ def send_guess_word(word: str):
 
 
 if __name__ == '__main__':
-    # uvicorn main:app --reload --port 5000
-    uvicorn.run("main:app", port=5000, reload=True)
+    # uvicorn main:app --reload --port 8000
+    uvicorn.run("main:app", port=8000, reload=True)
 
