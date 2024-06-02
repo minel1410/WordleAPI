@@ -1,8 +1,6 @@
 from utils import *
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
 import uvicorn
 
 app = FastAPI()
@@ -23,11 +21,11 @@ def read_root():
 
 
 @app.get("/answer")
-def read_root():
+def get_answer():
     return {"word": word_of_the_day}
 
 
-@app.post("/{word}")
+@app.post("/guess")
 def send_guess_word(word: str):
     guess_word = word.upper()
     if guess_word == word_of_the_day:
@@ -59,7 +57,5 @@ def send_guess_word(word: str):
     }
 
 
-if __name__ == '__main__':
-    # uvicorn main:app --reload --port 8000
+if __name__ == "__main__":
     uvicorn.run("main:app", port=8000, reload=True)
-
